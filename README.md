@@ -10,6 +10,20 @@ A local system monitoring platform with real-time telemetry and AI analysis. It 
 * **Frontend Dashboard:** React
 * **AI Engine:** Ollama LLM (Qwen 2.5 1.5B)
 
+## Screenshots
+
+### Main Dashboard
+![Main Dashboard](screenshots/dashboard.png)
+
+### Process Monitor
+![Process Monitor](screenshots/processes.png)
+
+### Alert Center
+![Alert Center](screenshots/alerts.png)
+
+### AI Analysis
+![AI Analysis](screenshots/ai_analysis.png)
+
 ## Key Features
 
 ### 1. Real-Time Telemetry & Process Intelligence
