@@ -66,6 +66,91 @@ A live dashboard displaying:
 * **Every cycle:** The backend collects system stats and sends WebSocket updates. The frontend renders the updates instantly.
 * **Every 10-15 seconds:** The AI runs to provide continuous dashboard updates.
 
+## System Architecture Diagram
+
+```
+                  React Frontend
+                         │
+                    WebSocket/API
+                         │
+                   Python Backend
+                (FastAPI async server)
+                         │
+        ┌────────────┼────────────┐
+        │            │            │
+     Ollama        Tools       Database
+   (Qwen 2.5)   Integration
+```
+
+## Directory Structure
+```
+D:\
+ ├── ollama\
+ │    └── models\
+ │
+ ├── ai-devops-project\
+ │    ├── backend\
+ │    ├── frontend\
+ │    ├── datasets\
+ │    └── logs\
+```
+
+## Getting Started / Setup Guide
+
+### 1. Prerequisites
+Ensure you have the following installed:
+* Python 3.8+
+* Node.js & npm
+* Ollama
+* OpenSSL (for generating local HTTPS certificates)
+
+### 2. Ollama AI Setup
+Install Ollama, verify its version, and pull the required model:
+```bash
+ollama --version
+ollama list
+ollama pull qwen2.5:1.5b
+ollama run qwen2.5:1.5b
+```
+*(To stop the model if needed, run: `taskkill /IM ollama.exe /F`)*
+
+### 3. Backend Setup (FastAPI)
+Open a terminal and navigate to the backend directory:
+```bash
+cd D:\ai-devops-project\backend
+
+# Create and activate virtual environment
+py -m venv venv
+venv\Scripts\activate
+
+# Install dependencies
+python -m pip install --upgrade pip
+python -m pip install fastapi[all] uvicorn ollama psutil websockets httpx
+
+# Generate SSL certificate for secure WebSocket traffic
+openssl req -x509 -newkey rsa:2048 -nodes -keyout key.pem -out cert.pem -days 365
+
+# Run the backend server with HTTPS
+python -m uvicorn main:app --host 0.0.0.0 --port 8000 --ssl-keyfile=key.pem --ssl-certfile=cert.pem
+```
+
+### 4. Frontend Setup (React/Vite)
+Open another terminal:
+```bash
+cd D:\ai-devops-project\frontend
+
+# Install dependencies
+npm install
+
+# Run the frontend server
+npm run dev
+```
+
+### 5. Helpful Debugging Commands
+* Check running processes: `tasklist`
+* Check port 8000 usage: `netstat -ano | findstr :8000`
+* Kill a process by PID: `taskkill /PID <pid> /F`
+
 ## What this project represents
 This is a simplified DevOps observability system:
 * Like **Datadog agent** (metrics)
