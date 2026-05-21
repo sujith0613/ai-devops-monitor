@@ -51,6 +51,17 @@ A live dashboard displaying:
 * Enabled HTTPS with OpenSSL self-signed certificates.
 * Uvicorn runs a secure server resulting in encrypted local traffic and secure WebSocket upgrades (wss).
 
+## Core Design Decisions
+
+1. **Metric Collection:** Uses `psutil` for direct OS access to CPU/memory metrics without external agents, ensuring offline functionality and low setup cost.
+2. **Time Series History:** Keeps a short-term in-memory buffer (last 5 entries) of system snapshots. This reduces memory usage while smoothing out sudden spikes.
+3. **Rolling Averages:** Averages the history buffer to remove noise, avoid false alerts, and stabilize the input for the AI model.
+4. **Process Scoring & Sorting:** Processes are ranked using a weighted formula (`score = CPU * 0.6 + Memory * 0.4`). This prioritizes CPU spikes (which usually cause lag) while still accounting for persistent memory leaks. The top 5 heavy processes are extracted for analysis.
+5. **Structured AI Prompts:** The AI receives a structured prompt containing CPU/Memory averages and the top processes. This ensures consistent responses, easier pattern recognition, and stable outputs.
+6. **AI Decision Layer:** The local LLM interprets the raw metrics to provide a human-readable system summary, risk level (0-30: low, 30-70: medium, 70+: high), root causes, and actionable fix suggestions without hardcoding rules.
+7. **WebSocket Streaming:** Uses WebSockets for real-time updates without polling overhead, providing a continuous data feed to the frontend.
+8. **In-Memory Storage:** The system avoids a persistent database to remain lightweight, fast, and simple. The trade-off is that historical data is lost on restart.
+
 ## Real-time Behavior
 * **Every cycle:** The backend collects system stats and sends WebSocket updates. The frontend renders the updates instantly.
 * **Every 10-15 seconds:** The AI runs to provide continuous dashboard updates.
