@@ -1,5 +1,11 @@
 # AI DevOps Monitor
 
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+![Ollama](https://img.shields.io/badge/Ollama-ffffff?style=for-the-badge&logo=ollama&logoColor=black)
+![WebSockets](https://img.shields.io/badge/WebSockets-black?style=for-the-badge&logo=socket.io&badgeColor=010101)
+
 A local system monitoring platform with real-time telemetry and AI analysis. It runs fully on your laptop.
 
 ## System Architecture
@@ -164,3 +170,30 @@ This is a simplified DevOps observability system:
 * No authentication layer
 * No multi-machine tracking
 * No event-driven architecture
+
+## Future Work: Multi-Agent Tool Calling Architecture
+
+As the project evolves, the next major feature will be migrating to an **AI Orchestrator with Multi-Agent Tool Calling** (leveraging advanced models like Gemma 4). 
+
+Instead of a single LLM evaluating everything, the architecture will be upgraded to a primary intent-parsing AI that dynamically routes requests to individual, specialized trained AI models acting as tools.
+
+### The Vision
+Similar to how you might ask a voice assistant:
+> *"Hey AI, what's the score?"* → Routes to a **Score Predictor AI Tool**
+> *"Hey AI, is it going to rain?"* → Routes to a **Weather Predictor AI Tool**
+
+**In our AI DevOps Monitor, it will look like this:**
+> *"Hey AI, why is the server lagging?"* 
+> 1. **Primary Orchestrator AI** analyzes the natural language prompt.
+> 2. It determines which tools are needed and selects the **Anomaly Detection AI Tool** and the **Log Analyzer AI Tool**.
+> 3. The specialized models run their predictions.
+> 4. The primary AI synthesizes their outputs to provide a comprehensive fix.
+
+### Proposed Tool Suite
+Each "tool" will be its own individually trained ML/AI model with a narrow, specific purpose:
+* **Log Analysis AI:** Trained specifically to parse application logs and find stack traces.
+* **Network Traffic Predictor AI:** Forecasts bandwidth spikes and usage trends.
+* **Process Anomaly AI:** Analyzes memory/CPU behavior to detect exact signatures of memory leaks.
+* **Command Execution AI:** A sandboxed tool that safely generates and executes OS-level commands (e.g., dynamically altering limits or safely killing rogue processes).
+
+This structure will enable seamless, natural language tool-calling where the main AI delegates tasks to specialized micro-models, drastically improving accuracy and system reliability.
