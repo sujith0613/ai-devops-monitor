@@ -19,16 +19,16 @@ A local system monitoring platform with real-time telemetry and AI analysis. It 
 ## Screenshots
 
 ### Main Dashboard
-![Main Dashboard](screenshots/dashboard.png)
+![Main Dashboard](screenshots/dashboard-2025.png)
 
 ### Process Monitor
-![Process Monitor](screenshots/processes.png)
+![Process Monitor](screenshots/processes-2025.png)
 
 ### Alert Center
-![Alert Center](screenshots/alerts.png)
+![Alert Center](screenshots/alerts-2025.png)
 
 ### AI Analysis
-![AI Analysis](screenshots/ai_analysis.png)
+![AI Analysis](screenshots/ai-analysis-2025.png)
 
 ## Key Features
 
